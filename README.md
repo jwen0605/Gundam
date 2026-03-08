@@ -1,7 +1,52 @@
 # Gundam Command Center · ALICE SYSTEM
 # 高达指挥中心 · ALICE SYSTEM
 
-A Gundam Universe knowledge base powered by FastAPI + Claude AI, featuring a Mobile Suit encyclopedia, war timeline, and AI Q&A.
+> **Ask ALICE anything about the Gundam universe — she'll pull real data, compare Mobile Suits, and answer like a true MS analyst.**
+
+A full-stack Gundam knowledge base powered by **FastAPI + Claude AI**, featuring a Mobile Suit encyclopedia, war timeline, and an AI agent that *actually uses tools* to answer your questions.
+
+---
+
+## Why This Is Cool · 亮点所在
+
+### ALICE Doesn't Just Chat — She Acts
+
+Most AI chatbots answer from memory. ALICE is different: when you ask a question, she **decides which tools to call**, fetches live data from the MS database, and reasons over the results before replying. This is [Claude's Tool Use](https://docs.anthropic.com/en/docs/tool-use) in action.
+
+**Example conversation:**
+
+> **You:** "Who would win — ν Gundam or Sazabi?"
+>
+> **ALICE:** *(internally calls `get_ms_details` for RX-93 and MSN-04, then `compare_ms`)* → Returns a structured breakdown of output, armor, pilot skill, and historical context.
+
+No hardcoded answers. Real reasoning over real data.
+
+### How Claude Tool Use Works Here
+
+```
+User Question
+     │
+     ▼
+Claude (claude-sonnet-4-6) decides which tool(s) to call
+     │
+     ├─ get_ms_details("rx-93")   ← fetches from ms_database.json
+     ├─ compare_ms("rx-93", "msn-04")
+     └─ get_war_info("First Neo Zeon War")
+     │
+     ▼
+Claude reads tool results and crafts a final answer
+```
+
+The AI doesn't guess — it **queries**, **reads**, and **reasons**. The agentic loop runs until Claude is satisfied it has enough data to give a complete answer.
+
+### Built With Claude claude-sonnet-4-6
+
+- Roleplayed as **ALICE** (Advanced Logistic & Intelligence Command Engine)
+- System prompt defines her persona: a passionate MS historian and analyst
+- Supports multi-turn tool calls in a single response
+- `/api/commentary` endpoint lets Claude generate deep-dive analyses for any MS on demand
+
+---
 
 ## Features · 功能特性
 
