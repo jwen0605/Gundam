@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>高达指挥中心 · ALICE SYSTEM</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <!-- 背景网格 -->
+  <div class="bg-grid"></div>
+  <div class="scanline"></div>
+
+  <!-- 顶部导航 -->
+  <header class="header">
+    <div class="header-left">
+      <div class="logo-mark"></div>
+      <div>
+        <div class="header-title">ALICE COMMAND SYSTEM</div>
+        <div class="header-sub">高达图鉴 · 战争年表 · AI问答</div>
+      </div>
+    </div>
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-tab="hangar">MS 图鉴</button>
+      <button class="nav-tab" data-tab="timeline">战争年表</button>
+      <button class="nav-tab" data-tab="chat">AI 问答</button>
+    </nav>
+    <div class="header-status">
+      <span class="status-dot"></span>
+      <span id="status-text">SYSTEM ONLINE</span>
+    </div>
+  </header>
+
+  <!-- 英雄展示区 -->
+  <div id="hero-showcase" class="hero-showcase">
+    <div class="hero-bg" id="hero-bg"></div>
+    <div class="hero-scanline"></div>
+
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="hero-label">FEATURED UNIT</div>
+        <div class="hero-model" id="hero-model">——</div>
+        <div class="hero-name-zh" id="hero-name-zh">载入中...</div>
+        <div class="hero-tags" id="hero-tags"></div>
+        <div class="hero-desc" id="hero-desc"></div>
+        <div class="hero-actions">
+          <button class="hero-btn-primary" id="hero-view-btn" onclick="openMSModal(currentHeroId)">查看详情</button>
+          <button class="hero-btn-secondary" id="hero-chat-btn">AI 解说</button>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-img-wrap">
+          <img id="hero-img" class="hero-img" src="" alt="" />
+          <div class="hero-img-glow" id="hero-img-glow"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-footer">
+      <button class="hero-nav-btn" id="hero-prev">&#8249;</button>
+      <div class="hero-dots" id="hero-dots"></div>
+      <button class="hero-nav-btn" id="hero-next">&#8250;</button>
+    </div>
+    <div class="hero-progress-bar"><div class="hero-progress-fill" id="hero-progress"></div></div>
+  </div>
+
+  <!-- 主内容区 -->
+  <main class="main">
+
+    <!-- ── MS 图鉴 ── -->
+    <section id="tab-hangar" class="tab-section active">
+      <div class="section-header">
+        <h2 class="section-title">MS 图鉴数据库</h2>
+        <div class="filter-bar">
+          <input id="search-input" class="search-input" type="text" placeholder="搜索机体、型号、驾驶员..." />
+          <select id="filter-universe" class="filter-select">
+            <option value="">全部宇宙</option>
+            <option value="UC">宇宙世纪 (UC)</option>
+            <option value="AC">改历 (AC)</option>
+            <option value="CE">宇宙世纪(CE)</option>
+            <option value="AD">先进世纪 (AD)</option>
+            <option value="PD">正历 (PD)</option>
+          </select>
+          <select id="filter-faction" class="filter-select">
+            <option value="">全部阵营</option>
+            <option value="federation">联邦系</option>
+            <option value="zeon">吉翁系</option>
+            <option value="aeug">AEUG</option>
+            <option value="neutral">中立/其他</option>
+          </select>
+        </div>
+      </div>
+      <div id="ms-grid" class="ms-grid">
+        <div class="loading-msg">正在载入MS数据库...</div>
+      </div>
+    </section>
+
+    <!-- ── 战争年表 ── -->
+    <section id="tab-timeline" class="tab-section">
+      <div class="section-header">
+        <h2 class="section-title">战争年表</h2>
+        <div class="filter-bar">
+          <select id="timeline-universe" class="filter-select">
+            <option value="">全部宇宙</option>
+            <option value="UC">宇宙世纪 (UC)</option>
+            <option value="AC">改历 (AC)</option>
+            <option value="CE">宇宙世纪(CE)</option>
+            <option value="AD">先进世纪 (AD)</option>
+            <option value="PD">正历 (PD)</option>
+          </select>
+        </div>
+      </div>
+      <div id="timeline-list" class="timeline-list">
+        <div class="loading-msg">正在载入年表...</div>
+      </div>
+    </section>
+
+    <!-- ── AI 问答 ── -->
+    <section id="tab-chat" class="tab-section">
+      <div class="chat-layout">
+        <div class="chat-panel">
+          <div class="chat-header">
+            <div class="alice-avatar">A</div>
+            <div>
+              <div class="alice-name">ALICE</div>
+              <div class="alice-desc">Advanced Logistic &amp; Intelligence Command Engine</div>
+            </div>
+          </div>
+          <div id="chat-messages" class="chat-messages">
+            <div class="msg-alice">
+              <div class="msg-bubble">
+                你好，指挥官。我是ALICE，你的高达宇宙专属AI。<br/><br/>
+                我可以回答关于任何MS型号、战争历史、驾驶员背景的问题，也能对比分析不同机体的性能与意义。<br/><br/>
+                试试问我：<br/>
+                • 「v高达和沙煞比哪个更强？」<br/>
+                • 「一年战争中最重要的MS有哪些？」<br/>
+                • 「Z高达的生物传感器是什么？」
+              </div>
+            </div>
+          </div>
+          <div id="tool-log" class="tool-log hidden"></div>
+          <div class="chat-input-area">
+            <textarea id="chat-input" class="chat-input" placeholder="输入你的问题..." rows="2"></textarea>
+            <button id="send-btn" class="send-btn">发送</button>
+          </div>
+        </div>
+
+        <div class="chat-sidebar">
+          <div class="sidebar-title">快速提问</div>
+          <div class="quick-questions">
+            <button class="quick-q" data-q="一年战争中最重要的三台MS是哪些？请详细分析。">一年战争核心MS</button>
+            <button class="quick-q" data-q="阿姆罗·雷和夏亚·阿兹纳布尔的关系是什么？他们各自驾驶过哪些机体？">阿姆罗 vs 夏亚</button>
+            <button class="quick-q" data-q="对比分析v高达和沙煞比，谁会赢？">v高达 vs 沙煞比</button>
+            <button class="quick-q" data-q="什么是新人类？新人类专用MS有哪些特点？">新人类与MS</button>
+            <button class="quick-q" data-q="高达系列各个宇宙（UC/AC/CE/AD/PD）有什么区别和联系？">各宇宙区别</button>
+            <button class="quick-q" data-q="格里普斯战役是什么？有哪些重要MS参与？">格里普斯战役</button>
+            <button class="quick-q" data-q="独角兽高达的NT-D系统是什么原理？">独角兽NT-D系统</button>
+            <button class="quick-q" data-q="从技术进化角度，讲述宇宙世纪MS的发展历程。">UC MS技术进化史</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MS 详情模态框 -->
+  <div id="ms-modal" class="modal hidden">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close">✕</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
