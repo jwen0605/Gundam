@@ -5,6 +5,8 @@
 
 A full-stack Gundam knowledge base powered by **FastAPI + Claude AI**, featuring a Mobile Suit encyclopedia, war timeline, and an AI agent that *actually uses tools* to answer your questions.
 
+![MS Encyclopedia](static/1.png)
+
 ---
 
 ## Why This Is Cool · 亮点所在
@@ -46,6 +48,8 @@ The AI doesn't guess — it **queries**, **reads**, and **reasons**. The agentic
 - Supports multi-turn tool calls in a single response
 - `/api/commentary` endpoint lets Claude generate deep-dive analyses for any MS on demand
 
+![ALICE AI Chat](static/2.png)
+
 ---
 
 ## Features · 功能特性
@@ -55,6 +59,8 @@ The AI doesn't guess — it **queries**, **reads**, and **reasons**. The agentic
 
 - **War Timeline**: 14 major wars and historical events spanning the entire Gundam multiverse.
   （战争年表：14 场重大战争与历史事件）
+
+![War Timeline](static/3.png)
 
 - **AI Q&A**: ALICE AI powered by Claude claude-sonnet-4-6, with tool-calling support for querying the MS database and comparing unit performance.
   （AI 问答：由 Claude claude-sonnet-4-6 驱动，支持工具调用）
